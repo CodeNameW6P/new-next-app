@@ -2,42 +2,48 @@
 import addUser from "@/actions/user-actions";
 import { useState } from "react";
 
-const CreateAccount: React.FC = () => {
+const TestOne: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState({
-        nameError: "",
-        nidSmartCardError: ""
+        emailError: "",
+        phoneError: ""
     });
 
     const [formData, setFormData] = useState({
-        name: "",
-        nidSmartCard: ""
+        email: "",
+        phone: ""
     });
 
     const validateForm = (formData: any) => {
         let validity = true;
 
-        if (formData.name.trim() === "" || formData.name.trim() === null) {
+        if (formData.email.trim() === "" || formData.email.trim() === null) {
             setErrorMessage(e => ({
                 ...e,
-                nameError: "Name is required"
+                emailError: "Email is required"
             }));
             validity = false;
         } else {
             setErrorMessage(e => ({
                 ...e,
-                nameError: ""
+                emailError: ""
             }));
         }
-        if (formData.nidSmartCard.trim() === "" || formData.nidSmartCard.trim() === null) {
+        if (formData.phone.trim() === "" || formData.phone.trim() === null) {
             setErrorMessage(e => ({
                 ...e,
-                nidSmartCardError: "NID is required"
+                phoneError: "Phone number is required"
+            }));
+            validity = false;
+        } else if ((/^\d+$/).test(formData.phone.trim()) === false) {
+            setErrorMessage(e => ({
+                ...e,
+                phoneError: "Please enter a valid phone number"
             }));
             validity = false;
         } else {
             setErrorMessage(e => ({
                 ...e,
-                nidSmartCardError: ""
+                phoneError: ""
             }));
         }
 
@@ -55,8 +61,7 @@ const CreateAccount: React.FC = () => {
         event.preventDefault();
         const validity = validateForm(formData);
         if (validity === true) {
-            addUser(formData);
-            console.log("good");
+            console.log(formData);
         } else {
             console.log("bad");
         }
@@ -69,27 +74,27 @@ const CreateAccount: React.FC = () => {
                 <input
                     className="border-2 border-black"
                     type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
+                    name="email"
+                    id="email"
+                    value={formData.email}
                     onChange={handleChange} />
-                <span>{errorMessage.nameError}</span>
+                <span>{errorMessage.emailError}</span>
                 <br />
                 <input
                     className="border-2 border-black"
                     type="text"
-                    name="nidSmartCard"
-                    id="nidSmartCard"
-                    value={formData.nidSmartCard}
+                    name="phone"
+                    id="phone"
+                    value={formData.phone}
                     onChange={handleChange} />
-                <span>{errorMessage.nidSmartCardError}</span>
+                <span>{errorMessage.phoneError}</span>
                 <br />
                 <button>Proceed</button>
             </form>
-            <h1>{formData.name}</h1>
-            <h1>{formData.nidSmartCard}</h1>
+            <h1>{formData.email}</h1>
+            <h1>{formData.phone}</h1>
         </>
     );
 };
 
-export default CreateAccount;
+export default TestOne;
