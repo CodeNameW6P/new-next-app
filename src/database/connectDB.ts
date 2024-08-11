@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-    const connectionString = "mongodb+srv://codenamew6p:0123@cluster0.tqd6h2w.mongodb.net/";
+	const connectionString: any = process.env.DB_CONNECTION_STRING;
 
-    mongoose.connect(connectionString)
-        .then(() => console.log("Database connection established"))
-        .catch((error: any) => console.log(error));
+	mongoose
+		.connect(connectionString)
+		.then(() => console.log("Database connection established"))
+		.catch((error: any) => console.log(error));
 };
 
 export default connectDB;
